@@ -44,19 +44,28 @@ database.ref('/train').on('child_added', function (snapshot) {
     firstTrain = snapshot.val().firstTrain;
     frequency = snapshot.val().frequency;
 
-    var currentTime = moment();
-    var trainMilTime = moment().format(snapshot.val().firstTrain, 'HH:mm');
-    var nextArrival = currentTime.diff(trainMilTime, 'mintues');
-    var minAway = '5';
-    console.log('nextArrival', nextArrival);
+    var trainMilTime = moment(firstTrain, 'HH:mm');
+    var currentTime = moment().format('HH:mm');
+    var minArrival = moment().diff(trainMilTime, 'minutes');
+    var trainArrival = minArrival % frequency;
+    var minAway = frequency - trainArrival;
+    var nextTrain = moment().add(minAway, 'minutes');
+    var arrivalTime = nextTrain.format('HH:mm');
+
+    console.log('minAway ', minAway);
+    //var momentFrequency = currentTime.duration(frequency, "mintues");
+    //var minArrival = currentTime.diff(trainMilTime, 'mintues');
+    //console.log('momentfrequency', momentFrequency);
+    console.log('currenttime', currentTime);
     console.log('trainMiltime', trainMilTime);
+    console.log('minArrival', minArrival);
     
     // full list of items to the table
     $("#train-data").append("<tr class='train-display'>" +
         '<td>' + name + '</td>' +
         '<td>' + destination + '</td>' +
         '<td>' + frequency + '</td>' + 
-        '<td>' + nextArrival + '</td>' +
+        '<td>' + arrivalTime + '</td>' +
         '<td>' + minAway + '</td>' +
         '</tr>');
 
