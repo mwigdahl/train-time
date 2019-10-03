@@ -7,7 +7,7 @@ var firebaseConfig = {
     storageBucket: "",
     messagingSenderId: "914400423341",
     appId: "1:914400423341:web:6abb7a18e9443990f10524"
-  };
+};
 // Initialize Firebase
 firebase.initializeApp(firebaseConfig);
 
@@ -52,19 +52,11 @@ database.ref('/train').on('child_added', function (snapshot) {
     var nextTrain = moment().add(minAway, 'minutes');
     var arrivalTime = nextTrain.format('HH:mm');
 
-    console.log('minAway ', minAway);
-    //var momentFrequency = currentTime.duration(frequency, "mintues");
-    //var minArrival = currentTime.diff(trainMilTime, 'mintues');
-    //console.log('momentfrequency', momentFrequency);
-    console.log('currenttime', currentTime);
-    console.log('trainMiltime', trainMilTime);
-    console.log('minArrival', minArrival);
-    
-    // full list of items to the table
+    // Create the table of train info
     $("#train-data").append("<tr class='train-display'>" +
         '<td>' + name + '</td>' +
         '<td>' + destination + '</td>' +
-        '<td>' + frequency + '</td>' + 
+        '<td>' + frequency + '</td>' +
         '<td>' + arrivalTime + '</td>' +
         '<td>' + minAway + '</td>' +
         '</tr>');
